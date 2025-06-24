@@ -1,0 +1,63 @@
+                <!-- {{ set_elem.0 }} -->
+                <input type="hidden" name="id_playlist" value="{{ id_plist }}">
+                {% for set in set_elem %}
+                    {% if set.0 %}
+                    <span class="set_title">{{ set.0 }}</span>
+                    {% endif %}
+                    <div class="set_elements">
+                    {% for el in set.1 %}
+                        {% if el.type == "El_episode" %}
+                            <div class="element">
+                                <div class="left_position">
+                                    <div class="elem_title">{{ el.title }}</div>
+                                    <div class="elem_descrip">{% if el.description %}{{ el.description }}{% else %}невідомий автор | невідомий подкаст{% endif %}</div>
+                                </div>
+                                <div class="elem_addition">{% if el.addition %}{{ el.addition }}{% else %}--:--{% endif %}</div>
+                                <input type="hidden" name="type_element" value="epis">
+                                <input type="hidden" name="id_element" value="{{ el.id }}">
+                            </div>
+                        {% endif %}
+                        {% if el.type == "El_podcast" %}
+                            <div class="element">
+                                <div class="left_position">
+                                    <div class="elem_title">{{ el.title }}</div>
+                                    <div class="elem_descrip">{% if el.description %}{{ el.description }}{% else %}невідомий автор{% endif %}</div>
+                                </div>
+                                <div class="elem_addition">{% if el.addition %}{{ el.addition }}{% else %}--{% endif %}</div>
+                                <input type="hidden" name="type_element" value="podc">
+                                <input type="hidden" name="id_element" value="{{ el.id }}">
+                            </div>
+                        {% endif %}
+                        {% if el.type == "El_author" %}
+                            <div class="element">
+                                <div class="left_position">
+                                    <div class="elem_title_only">{{ el.title }}</div>
+                                </div>
+                                <input type="hidden" name="type_element" value="auth">
+                                <input type="hidden" name="id_element" value="{{ el.id }}">
+                            </div>
+                        {% endif %}
+                        {% if el.type == "El_playlist" %}
+                            <div class="element">
+                                <div class="left_position">
+                                    <div class="elem_title_only">{{ el.title }}</div>
+                                </div>
+                                <div class="elem_addition">{% if el.addition %}{{ el.addition }}{% else %}--{% endif %}</div>
+                                <input type="hidden" name="type_element" value="playl">
+                                <input type="hidden" name="id_element" value="{{ el.id }}">
+                            </div>
+                        {% endif %}
+                        {% if el.type == "El_other" %}
+                             <div class="element">
+                                <div class="left_position">
+                                    <div class="elem_title">{{ el.title }}</div>
+                                    <div class="elem_descrip">{{ el.description }}</div>
+                                </div>
+                                <div class="elem_addition">{{ el.addition }}</div>
+                                <input type="hidden" name="type_element" value="othr">
+                                <input type="hidden" name="id_element" value="{{ el.id }}">
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+                {% endfor %}

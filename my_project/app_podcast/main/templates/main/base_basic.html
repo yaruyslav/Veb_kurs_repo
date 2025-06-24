@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'style_general.css' %}">
+</head>
+<body class="home-walpaper">
+    <div id="title_walpaper">
+        <div id="general_bar">
+            <div id="block_gb1" class="block_gb">
+                <form action="{% url 'GENERAL' %}">
+                    <button id="gb1" type="submit">Додаток для подкастів</button>
+                </form>
+            </div>
+            <div id="block_gb2" class="block_gb">
+                <!-- <form method="post">
+                    {% csrf_token %}
+                    <input id="gb2" name="gb2_data" placeholder="Введіть дані для пошуку">
+                    <button id="gb3" type="submit">Пошук</button>
+                </form> -->
+            </div>
+            <div id="block_gb3" class="block_gb">
+                <form action="{{ render.path }}">
+                    <button id="gb4">Перезапустити</button>
+                </form>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="exit" value="1">
+                    <button id="gb5" type="submit">Обліковий запис</button>
+                </form>
+            </div>
+        </div>
+        <div id="work_bar">
+            {% block wb_buttons %}{% endblock %}
+        </div>
+    </div>
+
+    <div id="content_walpaper">
+        <div id="block_menu">
+            <div id="menu">
+                <div id="block_cw1" class="block_cw">
+                    <span id="nav_cw1">Навігація</span>
+                    <form action="{% url 'GENERAL' %}">
+                        <button id="nav_cw2">Головна</button>
+                    </form>
+                    <form action="{% url 'SEARCH' %}">
+                        <button id="nav_cw3">Пошук за жанром</button>
+                    </form>
+                    <form action="{% url 'PLAYLIST' %}">
+                        <button id="nav_cw4">Список плейлистів</button>
+                    </form>
+                </div>
+                {% block cw_buttons %}{% endblock %}
+            </div>
+            <div id="block_error">
+                
+                Errrrrrroorororororoororodfsdf
+            </div>
+        </div>
+        
+        <div id="descrip">
+            {% block block_descrip_add %}{% endblock %}
+            {% block block_descrip %}{% endblock %}
+        </div>
+    </div>
+    <div id="state_walpaper">
+        <div id="state_bar">
+            <audio id="audio" controls>
+                  <source id="source1" src="">
+                  <source id="source2" src="">
+            </audio>
+        </div>
+    </div>
+
+    
+
+    <script>
+        let onclick = null;
+    </script>
+
+    {% block show_buttons %}{% endblock %}
+
+    {% block buttons_do %}{% endblock %}
+</body>
+</html>

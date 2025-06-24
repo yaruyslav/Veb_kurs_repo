@@ -1,0 +1,18 @@
+{% extends 'base_entrace.html' %}
+
+{% block content %}
+    <div class="wallpaper">
+        <p class="logo">Додаток для подкастів</p>
+    </div>
+    <form id="entry_block" class="entry_block" method="post">
+        <input type="text" placeholder="login" name="login">
+        <input type="text" placeholder="password" name="passw">
+    </form>
+    <div class="buttons">
+        <button class="button1" form="entry_block" type="submit">Увійти</button>
+        <form action="{% url 'REGISTER' %}">
+            <button class="button2" type="submit">Реєстрація</button>
+        </form>
+    </div>
+    <div class="element">dlllallalalal</div>
+{% endblock %}

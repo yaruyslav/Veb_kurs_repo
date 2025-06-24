@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../../../static/style_general.css">
+</head>
+<body>
+    <div id="title_walpaper">
+        <div id="general_bar">
+            <div id="block_gb1" class="block_gb">
+                <button id="gb1" type="submit">Додаток для подкастів</button>
+            </div>
+            <div id="block_gb2" class="block_gb">
+                <form method="post">
+                    <input id="gb2" name="gb2_data" placeholder="Введіть дані для пошуку">
+                    <button id="gb3" type="submit">Пошук</button>
+                </form>
+            </div>
+            <div id="block_gb3" class="block_gb">
+                <button id="gb4">Перезапустити</button>
+                <button id="gb5">Обліковий запис</button>
+            </div>
+        </div>
+        <div id="work_bar">
+            <div id="block_wb1" class="block_wb">
+                <button type="submit" id="wb1" class="wb">Деталі</button>
+                <button type="submit" id="wb2" class="wb">Переглянути</button>
+                <!-- <button type="submit" id="wb3" class="wb">Змінити</button> -->
+                <button type="submit" id="wb4" class="wb">Видалити</button>
+                <button type="submit" id="wb5" class="wb">Додати до</button>
+            </div>
+            <div id="block_wb2" class="block_wb">
+                <button type="submit" id="wb6" class="wb">Змінити</button>
+                <button type="submit" id="wb7" class="wb">Видалити</button>
+                <button type="submit" id="wb8" class="wb">Створити</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="content_walpaper">
+        <div id="menu">
+            <div id="block_cw1" class="block_cw">
+                <span id="nav_cw1">Навігація</span>
+                <button id="nav_cw2">Головна</button>
+                <button id="nav_cw3">Пошук за жанром</button>
+                <button id="nav_cw4">Список плейлистів</button>
+            </div>
+            <div id="block_cw2" class="block_cw">
+                <span id="favor_cw1">Улюбені</span>
+                <button id="favor_cw2">"Назва 1"</button>
+                <button id="favor_cw3">"Назва 2"</button>
+                <button id="favor_cw4">"Назва 3"</button>
+                <button id="favor_cw4">"Назва 4"</button>
+                <button id="favor_cw4">"Назва 5"</button>
+            </div>
+        </div>
+        <div id="descrip">
+            <span class="set_title">General: </span>
+            <hr class="divider">
+
+            <hr class="divider">
+            <div class="set_elements">
+                <div class="element">
+                    <div class="left_position">
+                        <div class="elem_title">Епізод №20222</div>
+                        <div class="elem_descrip">Шуклін, Нана | Подкаст 1</div>
+                    </div>
+                    <div class="elem_addition">22:20</div>
+                    <input type="hidden" name="type_element" value="epis">
+                    <input type="hidden" name="id_element" value="20222">
+                </div>
+                <div class="element">
+                    <div class="left_position">
+                        <div class="elem_title">Подкаст №228</div>
+                        <div class="elem_descrip">Шуклін, Нана</div>
+                    </div>
+                    <div class="elem_addition">7</div>
+                    <input type="hidden" name="type_element" value="podc">
+                    <input type="hidden" name="id_element" value="228">
+                </div>
+                <div class="element">
+                    <div class="left_position">
+                        <div class="elem_title_only">Автор №69</div>
+                    </div>
+                    <input type="hidden" name="type_element" value="auth">
+                    <input type="hidden" name="id_element" value="69">
+                </div>
+                <div class="element">
+                    <div class="left_position">
+                        <div class="elem_title">Дані в request.session</div>
+                        <div class="elem_descrip">id.</div>
+                    </div>
+                    <div class="elem_addition">22:20</div>
+                    <input type="hidden" name="type_element" value="othr">
+                    <input type="hidden" name="id_element" value="20222">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="state_walpaper">
+        <div id="state_bar">
+            <audio id="audio" src="../../../../../media/indexed_media/What_Ive_Done.mp3" controls></audio>
+        </div>
+    </div>
+
+
+    
+    <script>
+        let curr_page = "..";
+        
+        const set_el1 = document.getElementsByClassName("set_title");
+        if (curr_page) {
+            set_el1[0].innerText += "with id_playlist: " + curr_page;
+        } else {
+            set_el1[0].innerText += "without id_playlist!";
+        }
+ 
+        let onclick = null;
+        var source = document;
+    </script>
+
+    <script>
+        function buttons_show(buttons) {
+            for (let i=0; i<buttons.length; i++) {
+                buttons[i].style.display = 'inline-block';
+            }
+        }
+        function buttons_hide(buttons) {
+            for (let i=0; i<buttons.length; i++) {
+                buttons[i].style.display = 'none';
+            }
+        }
+
+        function buttons_init_style() {
+            const buttons = document.getElementsByClassName("wb");
+            buttons_hide(buttons);
+            buttons[6].style.display = 'inline-block';
+        }
+        
+        buttons_init_style();
+        source.addEventListener('click', function(e) {
+            if (e.target!=onclick && onclick && !e.target.classList.contains("wb")) {
+                onclick.style.border = 'none';
+                onclick = null;
+
+                buttons_init_style();
+            }
+            if (e.target.classList.contains("element")) {
+                onclick = e.target;
+                onclick.style.border = "solid";
+
+                let data = onclick.querySelectorAll("input");
+                if (data[0].value) {
+                    const buttons = document.getElementsByClassName("wb");
+                    if (data[0].value=='epis') {
+                        buttons_show(buttons);
+                    } else if (data[0].value=='podc') {
+                        buttons_show(buttons);
+                        buttons[3].style.display = 'none';
+                    } else if (data[0].value=='auth') {
+                        buttons_show(buttons);
+                        buttons[3].style.display = 'none';
+                    } else {
+                        buttons_init_style();
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

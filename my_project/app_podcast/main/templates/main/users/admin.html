@@ -1,0 +1,193 @@
+{% extends 'main/base_basic.html' %}
+
+
+{% block wb_buttons %}
+            <div id="block_wb1" class="block_wb">
+                <button type="submit" id="wb1" class="wb" value="descr">Деталі</button>
+                <button type="click" id="wb2" class="wb">Переглянути</button>
+                <button type="submit" id="wb3" class="wb">Змінити</button>
+                <button type="click" id="wb4" class="wb" value="del_self">Видалити</button>
+                <button type="submit" id="wb5" class="wb">Додати до</button>
+            </div>
+            <div id="block_wb2" class="block_wb">
+                <button type="submit" id="wb6" class="wb" action="">Змінити</button>
+                <button type="click" id="wb7" class="wb" value="del_glob">Видалити</button>
+                <button type="submit" id="wb8" class="wb" action="">Створити</button>
+            </div>
+{% endblock %}
+
+{% block cw_buttons %}
+            <div id="block_cw2" class="block_cw">
+                <!-- <span id="favor_cw1">Улюбені</span>
+                <button id="favor_cw2">"Назва 1"</button>
+                <button id="favor_cw3">"Назва 2"</button>
+                <button id="favor_cw4">"Назва 3"</button>
+                <button id="favor_cw4">"Назва 4"</button>
+                <button id="favor_cw4">"Назва 5"</button> -->
+            </div>
+{% endblock %}
+
+{% block block_descrip %}
+                {% for set in set_elem %}
+                    {% if set.0 %}
+                    <span class="set_title">{{ set.0 }}</span>
+                    {% endif %}
+                    <div class="set_elements">
+                    {% for el in set.1 %}
+                        {% if el.type == "El_episode" %}
+                            <div class="element">
+                                <div class="left_position">
+                                    <div class="elem_title">{{ el.title }}</div>
+                                    <div class="elem_descrip">{% if el.description %}{{ el.description }}{% else %}невідомий автор | невідомий подкаст{% endif %}</div>
+                                </div>
+                                <div class="elem_addition">{% if el.addition %}{{ el.addition }}{% else %}--:--{% endif %}</div>
+                                <input type="hidden" name="type_element" value="epis">
+                                <input type="hidden" name="id_element" value="{{ el.id }}">
+                            </div>
+                        {% endif %}
+                        {% if el.type == "El_podcast" %}
+                            <div class="element">
+                                <div class="left_position">
+                                    <div class="elem_title">{{ el.title }}</div>
+                                    <div class="elem_descrip">{% if el.description %}{{ el.description }}{% else %}невідомий автор{% endif %}</div>
+                                </div>
+                                <div class="elem_addition">{% if el.addition %}{{ el.addition }}{% else %}--{% endif %}</div>
+                                <input type="hidden" name="type_element" value="podc">
+                                <input type="hidden" name="id_element" value="{{ el.id }}">
+                            </div>
+                        {% endif %}
+                        {% if el.type == "El_author" %}
+                            <div class="element">
+                                <div class="left_position">
+                                    <div class="elem_title_only">{{ el.title }}</div>
+                                </div>
+                                <input type="hidden" name="type_element" value="auth">
+                                <input type="hidden" name="id_element" value="{{ el.id }}">
+                            </div>
+                        {% endif %}
+                        {% if el.type == "El_playlist" %}
+                            <div class="element">
+                                <div class="left_position">
+                                    <div class="elem_title_only">{{ el.title }}</div>
+                                </div>
+                                <div class="elem_addition">{% if el.addition %}{{ el.addition }}{% else %}--{% endif %}</div>
+                                <input type="hidden" name="type_element" value="playl">
+                                <input type="hidden" name="id_element" value="{{ el.id }}">
+                            </div>
+                        {% endif %}
+                        {% if el.type == "El_other" %}
+                             <div class="element">
+                                <div class="left_position">
+                                    <div class="elem_title">{{ el.title }}</div>
+                                    <div class="elem_descrip">{{ el.description }}</div>
+                                </div>
+                                <div class="elem_addition">{{ el.addition }}</div>
+                                <input type="hidden" name="type_element" value="othr">
+                                <input type="hidden" name="id_element" value="{{ el.id }}">
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+                {% endfor %}
+{% endblock %}
+
+
+{% block show_buttons %}
+    <script>
+        function buttons_show(buttons) {
+            for (let i=0; i<buttons.length; i++) {
+                buttons[i].style.display = 'inline-block';
+            }
+        }
+        function buttons_hide(buttons) {
+            for (let i=0; i<buttons.length; i++) {
+                buttons[i].style.display = 'none';
+            }
+        }
+
+        function buttons_init_style() {
+            const buttons = document.getElementsByClassName("wb");
+            buttons_hide(buttons);
+        }
+        
+        buttons_init_style();
+        var source1 = document;
+        source1.addEventListener('click', function(e) {
+            if (e.target.id=="block_error") {
+                e.target.style.display = "none";
+            }
+            if (e.target!=onclick && onclick && !e.target.classList.contains("wb")) {
+                onclick.style.border = 'none';
+                onclick = null;
+
+                buttons_init_style();
+            }
+            if (e.target.classList.contains("element")) {
+                onclick = e.target;
+                onclick.style.border = "solid";
+
+                let data = onclick.querySelectorAll("input");
+                if (data[0].value) {
+                    const buttons = document.getElementsByClassName("wb");
+                    if (data[0].value=='epis') {
+                        buttons_hide(buttons);
+                        buttons[1].style.display = 'inline-block'
+                    } else if (data[0].value=='podc') {
+                        buttons_show(buttons);
+                    } else if (data[0].value=='auth') {
+                    } else if (data[0].value=='playl') {
+                        buttons_hide(buttons);
+                        buttons[1].style.display = 'inline-block'
+                    } else {
+                        buttons_init_style();
+                    }
+                }
+            }
+        });
+    </script>
+{% endblock %}
+
+{% block buttons_do %}
+    <script>
+        var audio = document.getElementById("audio");
+        audio.volume = 0.3;
+        var wb_btn2 = document.getElementById("wb2");
+        wb_btn2.addEventListener('click', function(e) {
+            const data_inp = onclick.querySelectorAll("input");
+            const err = document.getElementById("block_error");
+
+            err.innerText = " ";
+            err.style.display = "none";
+
+            if (data_inp[0].value=="epis") {
+                const id = data_inp[1].value; 
+                fetch('/search/?type=get_link&id='+id, {
+                    method: "GET",
+                })  .then(response => response.json())
+                    .then(data => {
+                        const targ = document.getElementById("audio");
+                        const targ1 = document.getElementById("source1");
+                        const targ2 = document.getElementById("source2");
+                        targ1.src = "{{ MEDIA_URL }}indexed_media/"+data['MEDIA_NAME'];
+                        targ2.src = "{{ MEDIA_URL }}unindexed_media/"+data['MEDIA_NAME'];
+                        targ.load();
+                        targ.play();
+                    });
+            } else if (data_inp[0].value=="playl") {
+                const id = data_inp[1].value;
+
+                fetch('/playlists/?type=get_listdata&id='+id, {
+                    method: "GET",
+                })  .then(response => response.text())
+                    .then(html => {
+                        document.querySelector('#descrip').innerHTML = html;
+                    });
+                
+                
+            } else {
+                err.innerText = "Елемент неможливо програвати!";
+                err.style.display = "inline-block";
+            }
+        });
+    </script>
+{% endblock %}

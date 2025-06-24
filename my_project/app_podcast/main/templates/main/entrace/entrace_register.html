@@ -1,0 +1,22 @@
+{% extends 'base_entrace.html' %}
+
+{% block content %}
+    <div class="wallpaper">
+        <p class="logo">Додаток для подкастів</p>
+    </div>
+    <form id="entry_block" method="post">
+        {% csrf_token %}
+        <input type="text" placeholder="login" name="login">
+        <input type="text" placeholder="password" name="passw">
+        <input type="text" placeholder="repeat password" name="repassw">
+    </form>
+    <div class="buttons">
+        <form action="{% url 'LOGIN' %}">
+            <button class="button1" type="submit">Вхід</button>
+        </form>
+        <button class="button2" form="entry_block" type="submit">Зареєструватися</button>
+    </div>
+    <div id="message" style="display: {% if is_show %}inline-block{% else %}none{% endif %};">
+        {{ error }}
+    </div>
+{% endblock %}
